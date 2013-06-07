@@ -17,6 +17,12 @@ bool Rook::isFieldAttacked(Field* checkedField) {
     return false;
   }
 
+  if (!checkedField->isEmpty()) {
+    if (checkedField->getPiece()->getColor() == color) {
+      return false;
+    }
+  }
+ 
   if (checkedPosition.col != position.col && checkedPosition.row != position.row) {
     return false;
   }
@@ -55,5 +61,5 @@ bool Rook::isFieldAttacked(Field* checkedField) {
 }
 
 bool Rook::isMoveValid(Position toPos) {
-  return true;
+  return isFieldAttacked(board->getField(toPos));
 }

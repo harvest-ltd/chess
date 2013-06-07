@@ -123,19 +123,25 @@ eResult Board::movePiece(Position fromPos, Position toPos) {
   Field *fromField = getField(fromPos);
   Field *toField = getField(toPos);
 
-  if (fromField->isEmpty()) {
+  Move move(fromField, toField);
+  return applyMove(&move);
+}
+
+eResult Board::applyMove(Move* move) {
+  if (move->getFromField()->isEmpty()) {
     ERROR("Field is empty");
     return eFieldIsEmpty;
   }
 
-  Piece *fromPiece = fromField->getPiece();
-  Piece *toPiece = toField->getPiece();
+  Piece *fromPiece = move->getFromField()->getPiece();
+  Piece *toPiece = move->getToField()->getPiece();
 
-  if (!fromPiece->isMoveValid(toPos)) {
+  if (!fromPiece->isMoveValid(move->getToField()->getPosition())) {
+    INFO("Invalid move");
     return eInvalidMove;
   }
 
-  fromField->removePiece();
+  move->getFromField()->removePiece();
 
   if (attackPreviousLongPawnOpening) {
     Field* previousMoveToField = getField(previousMoveToPosition);
@@ -149,9 +155,9 @@ eResult Board::movePiece(Position fromPos, Position toPos) {
     removePieceFromBoard(toPiece);
   }
 
-  toField->setPiece(fromPiece);
+  move->getToField()->setPiece(fromPiece);
 
-  storeMove(fromPiece, fromPos, toPos);
+  storeMove(fromPiece, move->getFromField()->getPosition(), move->getToField()->getPosition());
 
   return eOk;
 }

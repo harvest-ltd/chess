@@ -99,7 +99,7 @@ void Test::run() {
 
   kingAttack();
 
-  boardAttackAfterBoardReset();
+  totalAttackAfterBoardReset();
 }
 
 void Test::resetBoard() {
@@ -740,8 +740,8 @@ void Test::kingAttack() {
   checkAttackedPositions(board, attackedPositions, white);
 }
 
-void Test::boardAttackAfterBoardReset() {
-  PRINT_TESTCASE("boardAttackAfterBoardReset");
+void Test::totalAttackAfterBoardReset() {
+  PRINT_TESTCASE("totalAttackAfterBoardReset");
 
   Board board;
 
@@ -753,35 +753,12 @@ void Test::boardAttackAfterBoardReset() {
   for (position.col = 1; position.col <= 8; ++position.col) {
     attackedPositions.push_back(Position(position.col, position.row));
   }
-  // white rooks
-  attackedPositions.push_back(Position(1, 2));
-  attackedPositions.push_back(Position(2, 1));
-  attackedPositions.push_back(Position(7, 1));
-  attackedPositions.push_back(Position(8, 2));
   // white knights
   attackedPositions.push_back(Position(1, 3));
   attackedPositions.push_back(Position(3, 3));
-  attackedPositions.push_back(Position(4, 2));
   attackedPositions.push_back(Position(6, 3));
   attackedPositions.push_back(Position(8, 3));
-  attackedPositions.push_back(Position(5, 2));
-  // white bishops
-  attackedPositions.push_back(Position(2, 2));
-  attackedPositions.push_back(Position(4, 2));
-  attackedPositions.push_back(Position(5, 2));
-  attackedPositions.push_back(Position(7, 2));
-  // white king
-  attackedPositions.push_back(Position(3, 1));
-  attackedPositions.push_back(Position(3, 2));
-  attackedPositions.push_back(Position(4, 2));
-  attackedPositions.push_back(Position(5, 2));
-  attackedPositions.push_back(Position(5, 1));
-  // white queen
-  attackedPositions.push_back(Position(4, 1));
-  attackedPositions.push_back(Position(4, 2));
-  attackedPositions.push_back(Position(5, 2));
-  attackedPositions.push_back(Position(6, 2));
-  attackedPositions.push_back(Position(6, 1));
+
 
   checkAttackedPositions(board, attackedPositions, white);
 
@@ -791,35 +768,11 @@ void Test::boardAttackAfterBoardReset() {
   for (position.col = 1; position.col <= 8; ++position.col) {
     attackedPositions.push_back(Position(position.col, position.row));
   }
-  // black rooks
-  attackedPositions.push_back(Position(1, 7));
-  attackedPositions.push_back(Position(2, 8));
-  attackedPositions.push_back(Position(7, 8));
-  attackedPositions.push_back(Position(8, 7));
   // black knights
   attackedPositions.push_back(Position(1, 6));
   attackedPositions.push_back(Position(3, 6));
-  attackedPositions.push_back(Position(4, 7));
   attackedPositions.push_back(Position(6, 6));
   attackedPositions.push_back(Position(8, 6));
-  attackedPositions.push_back(Position(5, 7));
-  // black bishops
-  attackedPositions.push_back(Position(2, 7));
-  attackedPositions.push_back(Position(4, 7));
-  attackedPositions.push_back(Position(5, 7));
-  attackedPositions.push_back(Position(7, 7));
-  // black king 
-  attackedPositions.push_back(Position(3, 8));
-  attackedPositions.push_back(Position(3, 7));
-  attackedPositions.push_back(Position(4, 7));
-  attackedPositions.push_back(Position(5, 7));
-  attackedPositions.push_back(Position(5, 8));
-  // black queen
-  attackedPositions.push_back(Position(4, 8));
-  attackedPositions.push_back(Position(4, 7));
-  attackedPositions.push_back(Position(5, 7));
-  attackedPositions.push_back(Position(6, 7));
-  attackedPositions.push_back(Position(6, 8));
 
   checkAttackedPositions(board, attackedPositions, black);
 }

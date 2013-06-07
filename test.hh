@@ -52,7 +52,7 @@ private:
 
   void kingAttack();
 
-  void boardAttackAfterBoardReset();
+  void totalAttackAfterBoardReset();
 
   void checkAttackedPositions(Board& board, std::vector<Position>& attackedPositions, ePieceColor attackColor);
 

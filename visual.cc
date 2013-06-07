@@ -4,8 +4,10 @@
 #include <iostream>
 #include <stdio.h>
 
-Visual::Visual(Board& board) :
-  board(board) {
+Visual::Visual(Board& board, Moves& moves) :
+  board(board),
+  moves(moves)
+{
 }
 
 Visual::~Visual() {
@@ -13,6 +15,8 @@ Visual::~Visual() {
 
 void Visual::drawBoard() {
   char symbol[30];
+
+  std::cout << std::endl;
 
   Position position;
   for (position.row = 8; position.row >= 1; --position.row) {
@@ -23,6 +27,8 @@ void Visual::drawBoard() {
     std::cout << std::endl;
   }
   std::cout << std::endl;
+
+  std::cout << "move count: " << moves.getMoveCount() << std::endl;
 
   for (unsigned char pieceIndex = 0; pieceIndex < board.removedPieces.size(); ++pieceIndex) {
     board.removedPieces[pieceIndex]->getSymbol(symbol);

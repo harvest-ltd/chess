@@ -1,7 +1,6 @@
 #pragma once
 
 #include "piece.hh"
-#include "field.hh"
 
 class Knight : public Piece {
 public:

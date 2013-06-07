@@ -19,6 +19,12 @@ bool Queen::isFieldAttacked(Field* checkedField) {
     return false;
   }
 
+  if (!checkedField->isEmpty()) {
+    if (checkedField->getPiece()->getColor() == color) {
+      return false;
+    }
+  }
+
   if (checkedPosition.col != position.col && checkedPosition.row != position.row && 
     abs(checkedPosition.col - position.col) != abs(checkedPosition.row - position.row)) {
     return false;
@@ -72,5 +78,5 @@ bool Queen::isFieldAttacked(Field* checkedField) {
 }
 
 bool Queen::isMoveValid(Position toPos) {
-  return true;
+  return isFieldAttacked(board->getField(toPos));
 }

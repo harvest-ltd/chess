@@ -12,6 +12,10 @@ namespace chess {
   std::cerr << "    " << type << ": " << __PRETTY_FUNCTION__ << std::endl; \
 }
 
+#define INFO(text) { \
+  PRINT("INFO", text) \
+}
+
 #define ERROR(text) { \
   PRINT("ERROR", text) \
 }

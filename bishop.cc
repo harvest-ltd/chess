@@ -19,6 +19,12 @@ bool Bishop::isFieldAttacked(Field* checkedField) {
     return false;
   }
 
+  if (!checkedField->isEmpty()) {
+    if (checkedField->getPiece()->getColor() == color) {
+      return false;
+    }
+  }
+
   if (abs(checkedPosition.col - position.col) != abs(checkedPosition.row - position.row)) {
     return false;
   }
@@ -42,5 +48,5 @@ bool Bishop::isFieldAttacked(Field* checkedField) {
 }
 
 bool Bishop::isMoveValid(Position toPos) {
-  return true;
+  return isFieldAttacked(board->getField(toPos));
 }
