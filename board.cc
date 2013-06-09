@@ -70,8 +70,8 @@ void Board::reset() {
   pos.col = 1; addPieceToBoard(rook, white, pos);
   pos.col = 2; addPieceToBoard(knight, white, pos);
   pos.col = 3; addPieceToBoard(bishop, white, pos);
-  pos.col = 4; addPieceToBoard(king, white, pos);
-  pos.col = 5; addPieceToBoard(queen, white, pos);
+  pos.col = 4; addPieceToBoard(queen, white, pos);
+  pos.col = 5; addPieceToBoard(king, white, pos);
   pos.col = 6; addPieceToBoard(bishop, white, pos);
   pos.col = 7; addPieceToBoard(knight, white, pos);
   pos.col = 8; addPieceToBoard(rook, white, pos);

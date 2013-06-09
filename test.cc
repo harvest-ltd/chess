@@ -110,24 +110,20 @@ void Test::resetBoard() {
 
   Position pos;
 
-  ePieceType whitePieceTypes[] = { rook, knight, bishop, king, queen, bishop, knight, rook };
-  ePieceType blackPieceTypes[] = { rook, knight, bishop, queen, king, bishop, knight, rook };
+  ePieceType pieces[] = { rook, knight, bishop, queen, king, bishop, knight, rook };
   
-  pos.row = 1;
   for (pos.col = 1; pos.col <= 8; ++pos.col) {
-    ASSERT_FIGURE(board.getField(pos)->getPiece(), whitePieceTypes[pos.col - 1], white);
-  }
-  pos.row = 8;
-  for (pos.col = 1; pos.col <= 8; ++pos.col) {
-    ASSERT_FIGURE(board.getField(pos)->getPiece(), blackPieceTypes[pos.col - 1], black);
-  }
+    pos.row = 1;
+    ASSERT_FIGURE(board.getField(pos)->getPiece(), pieces[pos.col - 1], white);
 
-  for (pos.col = 1; pos.col <= 8; ++pos.col) {
     pos.row = 2;
     ASSERT_FIGURE(board.getField(pos)->getPiece(), pawn, white);
 
     pos.row = 7;
     ASSERT_FIGURE(board.getField(pos)->getPiece(), pawn, black);
+
+    pos.row = 8;
+    ASSERT_FIGURE(board.getField(pos)->getPiece(), pieces[pos.col - 1], black);
   }
 
   for (pos.row = 3; pos.row <= 6; ++pos.row) {
