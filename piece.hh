@@ -26,6 +26,7 @@ public:
 
   ePieceColor getColor();
   ePieceType getType();
+  const char* getName();
 
   void setField(Field* newField);
   Field* getField();
@@ -49,5 +50,8 @@ protected:
   Field* field;
 
   bool moved;
+
+private:
+  static const char* names[];
 
 };
