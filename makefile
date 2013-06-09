@@ -8,49 +8,49 @@ LFLAGS = -Wall $(DEBUG)
 $(PRG): $(OBJS) 
 	$(CC) $(LFLAGS) $(OBJS) -o $(PRG) 
 
-chess.o: chess.cc board.hh test.hh
+chess.o: chess.cc board.hh test.hh debug.hh
 	$(CC) $(CFLAGS) chess.cc
 
 board.o: board.cc board.hh field.hh piece.hh pawn.hh rook.hh bishop.hh king.hh queen.hh king.hh debug.hh
 	$(CC) $(CFLAGS) board.cc
 
-field.o: field.cc field.hh
+field.o: field.cc field.hh debug.hh
 	$(CC) $(CFLAGS) field.cc
 
-piece.o: piece.cc piece.hh
+piece.o: piece.cc piece.hh debug.hh
 	$(CC) $(CFLAGS) piece.cc
 
-pawn.o: pawn.cc pawn.hh board.hh piece.hh
+pawn.o: pawn.cc pawn.hh board.hh piece.hh debug.hh
 	$(CC) $(CFLAGS) pawn.cc
 	
-rook.o: rook.cc rook.hh board.hh piece.hh
+rook.o: rook.cc rook.hh board.hh piece.hh debug.hh
 	$(CC) $(CFLAGS) rook.cc
 
-bishop.o: bishop.cc bishop.hh board.hh piece.hh
+bishop.o: bishop.cc bishop.hh board.hh piece.hh debug.hh
 	$(CC) $(CFLAGS) bishop.cc
 
-knight.o: knight.cc knight.hh board.hh piece.hh
+knight.o: knight.cc knight.hh board.hh piece.hh debug.hh
 	$(CC) $(CFLAGS) knight.cc
 
-queen.o: queen.cc queen.hh board.hh piece.hh
+queen.o: queen.cc queen.hh board.hh piece.hh debug.hh
 	$(CC) $(CFLAGS) queen.cc
 
-king.o: king.cc king.hh board.hh piece.hh
+king.o: king.cc king.hh board.hh piece.hh debug.hh
 	$(CC) $(CFLAGS) king.cc
 
-visual.o: visual.cc visual.hh board.hh
+visual.o: visual.cc visual.hh board.hh debug.hh
 	$(CC) $(CFLAGS) visual.cc
 
-move.o: move.cc move.hh field.hh
+move.o: move.cc move.hh field.hh debug.hh
 	$(CC) $(CFLAGS) move.cc
 
-moves.o: moves.cc moves.hh move.hh
+moves.o: moves.cc moves.hh move.hh debug.hh
 	$(CC) $(CFLAGS) moves.cc
 
-game.o: game.cc game.hh board.hh moves.hh visual.hh
+game.o: game.cc game.hh board.hh moves.hh visual.hh debug.hh
 	$(CC) $(CFLAGS) game.cc
 
-test.o: test.cc test.hh board.hh pawn.hh rook.hh bishop.hh king.hh queen.hh king.hh
+test.o: test.cc test.hh board.hh pawn.hh rook.hh bishop.hh king.hh queen.hh king.hh debug.hh
 	$(CC) $(CFLAGS) test.cc
 
 clean:
