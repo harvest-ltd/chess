@@ -1,6 +1,7 @@
 #include "bishop.hh"
 #include "board.hh"
 #include "position.hh"
+#include "move.hh"
 
 #include <stdlib.h>
 
@@ -47,6 +48,6 @@ bool Bishop::isFieldAttacked(Field* checkedField) {
   return false;
 }
 
-bool Bishop::isMoveValid(Position toPos) {
-  return isFieldAttacked(board->getField(toPos));
+bool Bishop::isMoveValid(Move* move) {
+  return isFieldAttacked(move->getToField());
 }

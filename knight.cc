@@ -1,6 +1,7 @@
 #include "knight.hh"
 #include "board.hh"
 #include "position.hh"
+#include "move.hh"
 
 #include <stdlib.h>
 
@@ -29,6 +30,6 @@ bool Knight::isFieldAttacked(Field* checkedField) {
   return false;
 }
 
-bool Knight::isMoveValid(Position toPos) {
-  return isFieldAttacked(board->getField(toPos));
+bool Knight::isMoveValid(Move* move) {
+  return isFieldAttacked(move->getToField());
 }

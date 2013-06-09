@@ -1,6 +1,7 @@
 #include "pawn.hh"
 #include "board.hh"
 #include "position.hh"
+#include "move.hh"
 
 #include <stdlib.h>
 
@@ -25,8 +26,9 @@ bool Pawn::isFieldAttacked(Field* checkedField) {
   return false;
 }
 
-bool Pawn::isMoveValid(Position toPos) {
+bool Pawn::isMoveValid(Move* move) {
   Position position = field->getPosition();
+  Position toPos = move->getToField()->getPosition();
 
   char colDiff = toPos.col - position.col;
   char rowDiff = toPos.row - position.row;

@@ -1,6 +1,7 @@
 #include "queen.hh"
 #include "board.hh"
 #include "position.hh"
+#include "move.hh"
 
 #include <stdlib.h>
 
@@ -77,6 +78,6 @@ bool Queen::isFieldAttacked(Field* checkedField) {
   return false;
 }
 
-bool Queen::isMoveValid(Position toPos) {
-  return isFieldAttacked(board->getField(toPos));
+bool Queen::isMoveValid(Move* move) {
+  return isFieldAttacked(move->getToField());
 }

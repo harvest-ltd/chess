@@ -1,6 +1,7 @@
 #include "rook.hh"
 #include "board.hh"
 #include "position.hh"
+#include "move.hh"
 
 Rook::Rook(Board* board, ePieceColor color) :
   Piece(board, color, rook) {
@@ -60,6 +61,6 @@ bool Rook::isFieldAttacked(Field* checkedField) {
   return false;
 }
 
-bool Rook::isMoveValid(Position toPos) {
-  return isFieldAttacked(board->getField(toPos));
+bool Rook::isMoveValid(Move* move) {
+  return isFieldAttacked(move->getToField());
 }

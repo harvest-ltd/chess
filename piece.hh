@@ -18,6 +18,7 @@ enum ePieceType {
 
 class Board;
 class Field;
+class Move;
 
 class Piece {
 public:
@@ -25,6 +26,7 @@ public:
   virtual ~Piece();
 
   ePieceColor getColor();
+  const char* getColorName();
   ePieceType getType();
   const char* getName();
 
@@ -37,7 +39,7 @@ public:
   void removeFromBoard();
 
   virtual bool isFieldAttacked(Field* field) = 0;
-  virtual bool isMoveValid(Position toPos) = 0;
+  virtual bool isMoveValid(Move* move) = 0;
 
   void getSymbol(char* symbol);
 
@@ -52,6 +54,7 @@ protected:
   bool moved;
 
 private:
-  static const char* names[];
+  static const char* pieceNames[];
+  static const char* colorNames[];
 
 };

@@ -1,7 +1,9 @@
 #include "piece.hh"
+
 #include <stdio.h>
 
-const char* Piece::names[] = { "Pawn", "Rook", "Bishop", "Knight", "Queen", "King" };
+const char* Piece::pieceNames[] = { "Pawn", "Rook", "Bishop", "Knight", "Queen", "King" };
+const char* Piece::colorNames[] = { "white", "black" };
 
 Piece::Piece(Board* board, ePieceColor color, ePieceType type) :
   board(board),
@@ -18,12 +20,16 @@ ePieceColor Piece::getColor() {
   return color;
 }
 
+const char* Piece::getColorName() {
+  return colorNames[color];
+}
+
 ePieceType Piece::getType() {
   return type;
 }
 
 const char* Piece::getName() {
-  return Piece::names[type];
+  return Piece::pieceNames[type];
 }
 
 void Piece::setField(Field* newField) {
