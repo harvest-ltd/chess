@@ -60,6 +60,6 @@ void Piece::getSymbol(char* symbol) {
   if (color == white) {
     sprintf(symbol, "%c", letter);
   } else {
-    sprintf(symbol, "%c[%d;%d;%dm%c%c[%dm", 27, 0, 37, 40, letter, 27, 0);
+    sprintf(symbol, "\033[7m%c\033[0m", letter);
   }
 }
