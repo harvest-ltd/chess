@@ -120,8 +120,8 @@ eResult Board::addPieceToBoard(ePieceType type, ePieceColor color, Position posi
 }
 
 eResult Board::movePiece(Position fromPos, Position toPos) {
-  Field *fromField = getField(fromPos);
-  Field *toField = getField(toPos);
+  Field* fromField = getField(fromPos);
+  Field* toField = getField(toPos);
 
   Move move(fromField, toField);
   return applyMove(&move);
@@ -133,29 +133,32 @@ eResult Board::applyMove(Move* move) {
     return eFieldIsEmpty;
   }
 
-  Piece *fromPiece = move->getFromField()->getPiece();
-  Piece *toPiece = move->getToField()->getPiece();
+  Piece* fromPiece = move->getFromField()->getPiece();
+  Piece* toPiece = move->getToField()->getPiece();
 
-  if (!fromPiece->isMoveValid(move->getToField()->getPosition())) {
+  DEBUGLINE("move " << fromPiece->getName() << " from (" << (int)move->getFromField()->getPosition().col << ", " << (int)move->getFromField()->getPosition().row << ") " << 
+                                                  "to (" << (int)move->getToField()->getPosition().col << ", " << (int)move->getToField()->getPosition().row << ")");
+
+  if (!fromPiece->isMoveValid(move)) {
     INFO("Invalid move");
     return eInvalidMove;
   }
 
   move->getFromField()->removePiece();
 
-  if (attackPreviousLongPawnOpening) {
-    Field* previousMoveToField = getField(previousMoveToPosition);
-    if (previousMoveToField) {
-      removePieceFromBoard(previousMoveToField->getPiece());
-    }
-  }
-  attackPreviousLongPawnOpening = false;
+  checkAttackPreviousLongPawnOpening();
 
   if (toPiece != NULL) {
     removePieceFromBoard(toPiece);
   }
 
   move->getToField()->setPiece(fromPiece);
+
+  if (move->isCastling()) {
+    Piece* rookPiece = move->getRookFromFieldDuringCastling()->getPiece();
+    move->getRookFromFieldDuringCastling()->removePiece();
+    move->getRookToFieldDuringCastling()->setPiece(rookPiece);
+  }
 
   storeMove(fromPiece, move->getFromField()->getPosition(), move->getToField()->getPosition());
 
@@ -258,4 +261,14 @@ void Board::storeMove(Piece* movedPiece, Position fromPos, Position toPos) {
       previousMoveWasLongPawnOpening = true;
     }
   }
+}
+
+void Board::checkAttackPreviousLongPawnOpening() {
+  if (attackPreviousLongPawnOpening) {
+    Field* previousMoveToField = getField(previousMoveToPosition);
+    if (previousMoveToField) {
+      removePieceFromBoard(previousMoveToField->getPiece());
+    }
+  }
+  attackPreviousLongPawnOpening = false;
 }

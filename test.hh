@@ -30,6 +30,11 @@ private:
   void pawnStep();
   void pawnInvalidAttackMove();
   void pawnKillsLongOpeningPawn();
+  void kingCastling();
+  void kingCastlingBlockedByOtherPiece();
+  void kingCastlingKingAlreadyMoved();
+  void kingCastlingRookAlreadyMoved();
+  void kingCastlingRookHasDifferentColor();
 
   // attack
   void whitePawnAttack();

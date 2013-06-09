@@ -78,6 +78,12 @@ void Test::run() {
   pawnInvalidAttackMove();
   pawnKillsLongOpeningPawn();
 
+  kingCastling();
+  kingCastlingBlockedByOtherPiece();
+  kingCastlingKingAlreadyMoved();
+  kingCastlingRookAlreadyMoved();
+  kingCastlingRookHasDifferentColor();
+
   PRINT_TESTSUITE("Attack");
   whitePawnAttack();
   blackPawnAttack();
@@ -100,6 +106,8 @@ void Test::run() {
   kingAttack();
 
   totalAttackAfterBoardReset();
+
+  std::cout << std::endl << "All tests ok!" << std::endl << std::endl;
 }
 
 void Test::resetBoard() {
@@ -411,6 +419,126 @@ void Test::pawnKillsLongOpeningPawn() {
 
   result = board.movePiece(blackFromPos, blackToPos);
   ASSERT_EQUAL(result, eOk); 
+}
+
+void Test::kingCastling() {
+  PRINT_TESTCASE("kingCastling");
+
+  Board board;
+  eResult result;
+
+  // short castling
+  Position kingFromPos(5, 1);
+  Position kingToPos(7, 1);
+  Position rookFromPos(8, 1);
+  Position rookToPos(6, 1);
+
+  board.addPieceToBoard(king, white, kingFromPos);
+  board.addPieceToBoard(rook, white, rookFromPos);
+
+  result = board.movePiece(kingFromPos, kingToPos);
+  ASSERT_EQUAL(result, eOk); 
+
+  ASSERT(board.getField(rookFromPos)->getPiece() == NULL);
+  ASSERT_FIGURE(board.getField(rookToPos)->getPiece(), rook, white);
+
+  // long castling
+  board.clear();
+
+  kingToPos.col = 3;
+  rookFromPos.col = 1;
+  rookToPos.col = 4;
+
+  board.addPieceToBoard(king, white, kingFromPos);
+  board.addPieceToBoard(rook, white, rookFromPos);
+  
+  result = board.movePiece(kingFromPos, kingToPos);
+  ASSERT_EQUAL(result, eOk); 
+
+  ASSERT(board.getField(rookFromPos)->getPiece() == NULL);
+  ASSERT_FIGURE(board.getField(rookToPos)->getPiece(), rook, white);
+}
+
+void Test::kingCastlingBlockedByOtherPiece() {
+  PRINT_TESTCASE("kingCastlingBlockedByOtherPiece");
+
+  Board board;
+  eResult result;
+
+  Position kingFromPos(5, 1);
+  Position kingToPos(7, 1);
+  Position rookPos(8, 1);
+  Position pawnPos(6, 1);
+
+  board.addPieceToBoard(king, white, kingFromPos);
+  board.addPieceToBoard(rook, white, rookPos);
+  board.addPieceToBoard(pawn, white, pawnPos);
+
+  result = board.movePiece(kingFromPos, kingToPos);
+  ASSERT_EQUAL(result, eInvalidMove); 
+}
+
+void Test::kingCastlingKingAlreadyMoved() {
+  PRINT_TESTCASE("kingCastlingKingAlreadyMoved");
+
+  Board board;
+  eResult result;
+
+  Position kingFromPos(5, 1);
+  Position kingToPos(6, 1);
+  Position rookPos(8, 1);
+
+  board.addPieceToBoard(king, white, kingFromPos);
+  board.addPieceToBoard(rook, white, rookPos);
+
+  result = board.movePiece(kingFromPos, kingToPos);
+  ASSERT_EQUAL(result, eOk); 
+  result = board.movePiece(kingToPos, kingFromPos);
+  ASSERT_EQUAL(result, eOk); 
+
+  kingToPos.col = 7;
+  result = board.movePiece(kingFromPos, kingToPos);
+  ASSERT_EQUAL(result, eInvalidMove); 
+}
+
+void Test::kingCastlingRookAlreadyMoved() {
+  PRINT_TESTCASE("kingCastlingRookAlreadyMoved");
+
+  Board board;
+  eResult result;
+
+  Position kingFromPos(5, 1);
+  Position kingToPos(7, 1);
+  Position rookFromPos(8, 1);
+  Position rookToPos(8, 2);
+
+  board.addPieceToBoard(king, white, kingFromPos);
+  board.addPieceToBoard(rook, white, rookFromPos);
+
+  result = board.movePiece(rookFromPos, rookToPos);
+  ASSERT_EQUAL(result, eOk); 
+  result = board.movePiece(rookToPos, rookFromPos);
+  ASSERT_EQUAL(result, eOk); 
+
+  result = board.movePiece(kingFromPos, kingToPos);
+  ASSERT_EQUAL(result, eInvalidMove); 
+}
+
+void Test::kingCastlingRookHasDifferentColor() {
+  PRINT_TESTCASE("kingCastlingRookHasDifferentColor");
+
+  Board board;
+  eResult result;
+
+  Position kingFromPos(5, 1);
+  Position kingToPos(7, 1);
+  Position rookPos(8, 1);
+
+  board.addPieceToBoard(king, white, kingFromPos);
+  board.addPieceToBoard(rook, black, rookPos);
+
+  result = board.movePiece(kingFromPos, kingToPos);
+  ASSERT_EQUAL(result, eInvalidMove); 
 }
 
 void Test::whitePawnAttack() {

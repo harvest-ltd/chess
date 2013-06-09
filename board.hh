@@ -55,4 +55,5 @@ private:
   std::vector<Piece*> removedPieces;
 
   void storeMove(Piece* movedPiece, Position fromPos, Position toPos);
+  void checkAttackPreviousLongPawnOpening();
 };
