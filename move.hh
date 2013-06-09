@@ -10,7 +10,17 @@ public:
   Field* getFromField();
   Field* getToField();
 
+  void setCastling();
+  bool isCastling();
+  void setRookFieldsDuringCastling(Field* fromField, Field* toField);
+  Field* getRookFromFieldDuringCastling();
+  Field* getRookToFieldDuringCastling();
+
 private:
   Field* fromField;
   Field* toField;
+
+  bool castling;
+  Field* rookFromFieldDuringCastling;
+  Field* rookToFieldDuringCastling;
 };
