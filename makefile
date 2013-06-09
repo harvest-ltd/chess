@@ -29,13 +29,13 @@ rook.o: rook.cc rook.hh board.hh piece.hh
 bishop.o: bishop.cc bishop.hh board.hh piece.hh
 	$(CC) $(CFLAGS) bishop.cc
 
-knight.o: knight.cc knight.hh piece.hh
+knight.o: knight.cc knight.hh board.hh piece.hh
 	$(CC) $(CFLAGS) knight.cc
 
 queen.o: queen.cc queen.hh board.hh piece.hh
 	$(CC) $(CFLAGS) queen.cc
 
-king.o: king.cc king.hh piece.hh
+king.o: king.cc king.hh board.hh piece.hh
 	$(CC) $(CFLAGS) king.cc
 
 visual.o: visual.cc visual.hh board.hh
