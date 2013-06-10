@@ -121,14 +121,6 @@ eResult Board::addPieceToBoard(ePieceType type, ePieceColor color, Position posi
   return eOk;
 }
 
-eResult Board::movePiece(Position fromPos, Position toPos) {
-  Field* fromField = getField(fromPos);
-  Field* toField = getField(toPos);
-
-  Move move(fromField, toField);
-  return applyMove(&move);
-}
-
 eResult Board::applyMove(Move* move) {
   if (move->getFromField()->isEmpty()) {
     ERROR("Field is empty");

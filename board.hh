@@ -26,7 +26,6 @@ public:
   void reset();
 
   eResult addPieceToBoard(ePieceType type, ePieceColor color, Position position);
-  eResult movePiece(Position fromPos, Position toPos);
   eResult applyMove(Move* move);
 
   bool isFieldAttacked(Field* field, ePieceColor attackColor);
