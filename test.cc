@@ -482,6 +482,8 @@ void Test::pawnKillsLongOpeningPawn() {
   result = board.applyMove(&move2);
   ASSERT_EQUAL(result, eOk); 
 
+  ASSERT(board.getField(blackToPos)->getPiece() == NULL);
+
   whiteFromPos.col = 2;
   whiteFromPos.row = 2;
   whiteToPos.col = 2;
@@ -509,6 +511,8 @@ void Test::pawnKillsLongOpeningPawn() {
 
   result = board.applyMove(&move4);
   ASSERT_EQUAL(result, eOk); 
+
+  ASSERT(board.getField(whiteToPos)->getPiece() == NULL);
 }
 
 void Test::kingCastling() {
