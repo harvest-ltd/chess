@@ -188,12 +188,16 @@ void Test::movePieceToEmptyField() {
   Position fromPos(2, 2);
   Position toPos(2, 3);
 
+  Field* fromField = board.getField(fromPos);
+  Field* toField = board.getField(toPos);
+  Move move(fromField, toField);
+
   board.addPieceToBoard(pawn, white, fromPos);
 
   ASSERT_FIGURE(board.getField(fromPos)->getPiece(), pawn, white);
   ASSERT(board.getField(toPos)->getPiece() == NULL);
 
-  ASSERT(board.movePiece(fromPos, toPos) == eOk);
+  ASSERT(board.applyMove(&move) == eOk);
 
   ASSERT(board.getField(fromPos)->getPiece() == NULL);
   ASSERT_FIGURE(board.getField(toPos)->getPiece(), pawn, white);
@@ -208,13 +212,17 @@ void Test::movePieceToNotEmptyField() {
   Position fromPos(2, 2);
   Position toPos(3, 3);
 
+  Field* fromField = board.getField(fromPos);
+  Field* toField = board.getField(toPos);
+  Move move(fromField, toField);
+
   board.addPieceToBoard(pawn, white, fromPos);
   board.addPieceToBoard(rook, black, toPos);
 
   ASSERT_FIGURE(board.getField(fromPos)->getPiece(), pawn, white);
   ASSERT_FIGURE(board.getField(toPos)->getPiece(), rook, black);
 
-  ASSERT(board.movePiece(fromPos, toPos) == eOk);
+  ASSERT(board.applyMove(&move) == eOk);
 
   ASSERT(board.getField(fromPos)->getPiece() == NULL);
   ASSERT_FIGURE(board.getField(toPos)->getPiece(), pawn, white);
@@ -228,9 +236,13 @@ void Test::movePieceFromEmptyField() {
   Position fromPos(2, 2);
   Position toPos(3, 3);
 
+  Field* fromField = board.getField(fromPos);
+  Field* toField = board.getField(toPos);
+  Move move(fromField, toField);
+
   board.addPieceToBoard(rook, black, toPos);
 
-  ASSERT(board.movePiece(fromPos, toPos) == eFieldIsEmpty);
+  ASSERT(board.applyMove(&move) == eFieldIsEmpty);
 
   ASSERT(board.getField(fromPos)->getPiece() == NULL);
   ASSERT_FIGURE(board.getField(toPos)->getPiece(), rook, black);
@@ -243,6 +255,10 @@ void Test::pieceVectors() {
 
   Position fromPos(2, 2);
   Position toPos(3, 3);
+
+  Field* fromField = board.getField(fromPos);
+  Field* toField = board.getField(toPos);
+  Move move(fromField, toField);
 
   board.addPieceToBoard(pawn, white, fromPos);
   board.addPieceToBoard(rook, black, toPos);
@@ -260,7 +276,7 @@ void Test::pieceVectors() {
   ASSERT(board.getRemovedPieceCount() == 0);
   ASSERT(board.getRemovedPiece(1) == NULL); 
 
-  ASSERT(board.movePiece(fromPos, toPos) == eOk);
+  ASSERT(board.applyMove(&move) == eOk);
 
   ASSERT(board.getWhitePieceCount() == 1);
   ASSERT_FIGURE(board.getWhitePiece(1), pawn, white); 
@@ -281,15 +297,25 @@ void Test::pawnShortOpening() {
 
   Position fromPos(2, 2);
   Position toPos(2, 3);
+
+  Field* fromField = board.getField(fromPos);
+  Field* toField = board.getField(toPos);
+  Move move1(fromField, toField);
+
   board.addPieceToBoard(pawn, white, fromPos);
 
-  ASSERT(board.movePiece(fromPos, toPos) == eOk); 
+  ASSERT(board.applyMove(&move1) == eOk); 
  
   fromPos.row = 7;
   toPos.row = 6;
+
+  fromField = board.getField(fromPos);
+  toField = board.getField(toPos);
+  Move move2(fromField, toField);
+
   board.addPieceToBoard(pawn, black, fromPos);
 
-  ASSERT(board.movePiece(fromPos, toPos) == eOk); 
+  ASSERT(board.applyMove(&move2) == eOk); 
 }
 
 void Test::pawnLongOpening() {
@@ -300,16 +326,26 @@ void Test::pawnLongOpening() {
 
   Position fromPos(2, 2);
   Position toPos(2, 4);
+
+  Field* fromField = board.getField(fromPos);
+  Field* toField = board.getField(toPos);
+  Move move1(fromField, toField);
+
   board.addPieceToBoard(pawn, white, fromPos);
 
-  result = board.movePiece(fromPos, toPos);
+  result = board.applyMove(&move1);
   ASSERT_EQUAL(result, eOk); 
 
   fromPos.row = 7;
   toPos.row = 5;
+
+  fromField = board.getField(fromPos);
+  toField = board.getField(toPos);
+  Move move2(fromField, toField);
+
   board.addPieceToBoard(pawn, black, fromPos);
 
-  result = board.movePiece(fromPos, toPos);
+  result = board.applyMove(&move2);
   ASSERT_EQUAL(result, eOk); 
 }
 
@@ -322,21 +358,35 @@ void Test::pawnLongMoveAfterOpening() {
   Position fromPos(2, 2);
   Position toPos1(2, 3);
   Position toPos2(2, 5);
+
+  Field* fromField = board.getField(fromPos);
+  Field* toField1 = board.getField(toPos1);
+  Field* toField2 = board.getField(toPos2);
+  Move move1(fromField, toField1);
+  Move move2(toField1, toField2);
+
   board.addPieceToBoard(pawn, white, fromPos);
 
-  result = board.movePiece(fromPos, toPos1);
+  result = board.applyMove(&move1);
   ASSERT_EQUAL(result, eOk); 
-  result = board.movePiece(toPos1, toPos2);
+  result = board.applyMove(&move2);
   ASSERT_EQUAL(result, eInvalidMove); 
 
   fromPos.row = 7;
   toPos1.row = 6;
   toPos2.row = 4;
+  fromField = board.getField(fromPos);
+  toField1 = board.getField(toPos1);
+  toField2 = board.getField(toPos2);
+
+  Move move3(fromField, toField1);
+  Move move4(toField1, toField2);
+
   board.addPieceToBoard(pawn, black, fromPos);
 
-  result = board.movePiece(fromPos, toPos1);
+  result = board.applyMove(&move3);
   ASSERT_EQUAL(result, eOk); 
-  result = board.movePiece(toPos1, toPos2);
+  result = board.applyMove(&move4);
   ASSERT_EQUAL(result, eInvalidMove); 
 }
 
@@ -348,16 +398,26 @@ void Test::pawnStep() {
 
   Position whiteFromPos(2, 5);
   Position whiteToPos(2, 6);
+
+  Field* fromField = board.getField(whiteFromPos);
+  Field* toField = board.getField(whiteToPos);
+  Move move1(fromField, toField);
+
   board.addPieceToBoard(pawn, white, whiteFromPos);
 
-  result = board.movePiece(whiteFromPos, whiteToPos);
+  result = board.applyMove(&move1);
   ASSERT_EQUAL(result, eOk); 
 
   Position blackFromPos(4, 7);
   Position blackToPos(4, 6);
+
+  fromField = board.getField(blackFromPos);
+  toField = board.getField(blackToPos);
+  Move move2(fromField, toField);
+
   board.addPieceToBoard(pawn, black, blackFromPos);
 
-  result = board.movePiece(blackFromPos, blackToPos);
+  result = board.applyMove(&move2);
   ASSERT_EQUAL(result, eOk); 
 }
 
