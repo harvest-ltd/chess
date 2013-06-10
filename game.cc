@@ -1,4 +1,5 @@
 #include "game.hh"
+#include "debug.hh"
 
 #include "stddef.h"
 #include <iostream>
@@ -32,8 +33,8 @@ void Game::start() {
 bool Game::readMove(Move*& move) {
   move = NULL;
 
-  unsigned char from[2];
-  unsigned char to[2];
+  unsigned char from[3];
+  unsigned char to[3];
 
   std::cout << "Move from: ";
   std::cin >> from;
@@ -61,6 +62,7 @@ bool Game::readMove(Move*& move) {
 }
 
 bool Game::getPosFromInput(unsigned char input[2], Position& pos) {
+  DEBUGLINE("input: " << (int)input[0] << ", " << (int)input[1]);
   if (input[0] < 97 || 104 < input[0] || input[1] < 49 || 56 < input[1]) {
     return false;
   }
