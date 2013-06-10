@@ -16,7 +16,7 @@ private:
   void resetBoard();
   void cleanBoard();
 
-	// piece
+  // piece
   void addPieceToBoard();
   void movePieceToEmptyField();
   void movePieceToNotEmptyField();
@@ -24,8 +24,8 @@ private:
   void pieceVectors();
 
   // move
-	void pawnShortOpening();
-	void pawnLongOpening();
+  void pawnShortOpening();
+  void pawnLongOpening();
   void pawnLongMoveAfterOpening();
   void pawnStep();
   void pawnInvalidAttackMove();
@@ -45,9 +45,9 @@ private:
   void rookAttackWithBlocking();
   void rookAttackWithTotalBlocking();
 
-	void knightAttack();
+  void knightAttack();
 
-	void bishopAttackOnEmptyBoard();
+  void bishopAttackOnEmptyBoard();
   void bishopAttackWithBlocking();
   void bishopAttackWithTotalBlocking();
 
