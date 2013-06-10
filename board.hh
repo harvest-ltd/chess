@@ -45,15 +45,16 @@ public:
   bool attackPreviousLongPawnOpening;
 
 private:
-  friend void Visual::drawBoard();
-
-  void removePieceFromBoard(Piece* piece);
-
   Field fields[NUM_OF_FIELDS];
   std::vector<Piece*> whitePieces;
   std::vector<Piece*> blackPieces;
   std::vector<Piece*> removedPieces;
 
+  Move* lastMove;
+
+  friend void Visual::drawBoard();
+
+  void removePieceFromBoard(Piece* piece);
   void storeMove(Piece* movedPiece, Position fromPos, Position toPos);
   void checkAttackPreviousLongPawnOpening();
 };

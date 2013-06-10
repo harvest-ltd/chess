@@ -13,7 +13,9 @@
 
 Board::Board() :
   previousMoveWasLongPawnOpening(false),
-  attackPreviousLongPawnOpening(false) {
+  attackPreviousLongPawnOpening(false),
+  lastMove(NULL)
+{
   Position position;
   for (unsigned char index = 0; index < NUM_OF_FIELDS; ++index) {
     position.col = index % 8 + 1;
@@ -159,6 +161,8 @@ eResult Board::applyMove(Move* move) {
     move->getRookFromFieldDuringCastling()->removePiece();
     move->getRookToFieldDuringCastling()->setPiece(rookPiece);
   }
+
+  lastMove = move;
 
   storeMove(fromPiece, move->getFromField()->getPosition(), move->getToField()->getPosition());
 
