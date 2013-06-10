@@ -7,7 +7,9 @@ Move::Move(Field* fromField, Field* toField) :
   toField(toField),
   castling(false),
   rookFromFieldDuringCastling(NULL),
-  rookToFieldDuringCastling(NULL)
+  rookToFieldDuringCastling(NULL),
+  longPawnOpening(false),
+  attackOfPreviousLongOpenedPawn(false)
 {
 }
 
@@ -41,4 +43,20 @@ Field* Move::getRookFromFieldDuringCastling() {
 
 Field* Move::getRookToFieldDuringCastling() {
   return rookToFieldDuringCastling;
+}
+
+void Move::setLongPawnOpening() {
+  longPawnOpening = true;
+}
+
+bool Move::isLongPawnOpening() {
+  return longPawnOpening;
+}
+
+void Move::setAttackOfPreviousLongOpenedPawn() {
+  attackOfPreviousLongOpenedPawn = true;
+}
+
+bool Move::isAttackOfPreviousLongOpenedPawn() {
+  return attackOfPreviousLongOpenedPawn;
 }

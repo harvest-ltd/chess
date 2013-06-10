@@ -41,12 +41,14 @@ bool Pawn::isMoveValid(Move* move) {
 
   Piece* toPiece = board->getField(toPos)->getPiece();
   if (!toPiece) {
-    if (board->previousMoveWasLongPawnOpening) {
-      if (board->previousMoveToPosition.col == toPos.col &&
-	        board->previousMoveToPosition.row == toPos.row - stepDirection) {
-        toPiece = board->getField(board->previousMoveToPosition)->getPiece();
+    Move* lastMove = board->getLastMove();
+    if (lastMove && lastMove->isLongPawnOpening()) {
+      Position previousMoveToPosition = lastMove->getToField()->getPosition();
+      if (previousMoveToPosition.col == toPos.col &&
+	        previousMoveToPosition.row == toPos.row - stepDirection) {
+        toPiece = board->getField(previousMoveToPosition)->getPiece();
         if (color != toPiece->getColor()) {
-          board->attackPreviousLongPawnOpening = true;
+          move->setAttackOfPreviousLongOpenedPawn();
           return true;
         }
       }
@@ -58,6 +60,9 @@ bool Pawn::isMoveValid(Move* move) {
       return false;
     }
     if (rowDiff == stepDirection * 2) {
+      if (!moved) {
+        move->setLongPawnOpening();
+      }
       return !moved;
     }
   } else {

@@ -12,8 +12,6 @@
 #include <stdlib.h>
 
 Board::Board() :
-  previousMoveWasLongPawnOpening(false),
-  attackPreviousLongPawnOpening(false),
   lastMove(NULL)
 {
   Position position;
@@ -49,8 +47,6 @@ void Board::clear() {
   }
   removedPieces.clear();
 
-  previousMoveWasLongPawnOpening = false;
-  attackPreviousLongPawnOpening = false;
   RETURN();
 }
 
@@ -140,13 +136,18 @@ eResult Board::applyMove(Move* move) {
 
   move->getFromField()->removePiece();
 
-  checkAttackPreviousLongPawnOpening();
-
   if (toPiece != NULL) {
     removePieceFromBoard(toPiece);
   }
 
   move->getToField()->setPiece(fromPiece);
+
+  if (move->isAttackOfPreviousLongOpenedPawn()) {
+    Field* previousMoveToField = lastMove->getToField();
+    if (previousMoveToField) {
+      removePieceFromBoard(previousMoveToField->getPiece());
+    }
+  }
 
   if (move->isCastling()) {
     Piece* rookPiece = move->getRookFromFieldDuringCastling()->getPiece();
@@ -155,8 +156,6 @@ eResult Board::applyMove(Move* move) {
   }
 
   lastMove = move;
-
-  storeMove(fromPiece, move->getFromField()->getPosition(), move->getToField()->getPosition());
 
   return eOk;
 }
@@ -223,6 +222,10 @@ Piece* Board::getRemovedPiece(unsigned char index) {
   return removedPieces[index - 1];
 }
 
+Move* Board::getLastMove() {
+  return lastMove;
+}
+
 void Board::removePieceFromBoard(Piece* piece) {
   if (!piece->getField()) {
     ERROR("piece->getField() is NULL");
@@ -246,25 +249,4 @@ void Board::removePieceFromBoard(Piece* piece) {
   }
 
   removedPieces.push_back(piece);
-}
-
-void Board::storeMove(Piece* movedPiece, Position fromPos, Position toPos) {
-  previousMoveToPosition = toPos;
-
-  previousMoveWasLongPawnOpening = false;
-  if (movedPiece->getType() == pawn) {
-    if (abs(fromPos.row - toPos.row) == 2) {
-      previousMoveWasLongPawnOpening = true;
-    }
-  }
-}
-
-void Board::checkAttackPreviousLongPawnOpening() {
-  if (attackPreviousLongPawnOpening) {
-    Field* previousMoveToField = getField(previousMoveToPosition);
-    if (previousMoveToField) {
-      removePieceFromBoard(previousMoveToField->getPiece());
-    }
-  }
-  attackPreviousLongPawnOpening = false;
 }

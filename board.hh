@@ -39,9 +39,7 @@ public:
   unsigned char getRemovedPieceCount();
   Piece* getRemovedPiece(unsigned char index);
 
-  Position previousMoveToPosition;
-  bool previousMoveWasLongPawnOpening;
-  bool attackPreviousLongPawnOpening;
+  Move* getLastMove();
 
 private:
   Field fields[NUM_OF_FIELDS];
@@ -54,6 +52,4 @@ private:
   friend void Visual::drawBoard();
 
   void removePieceFromBoard(Piece* piece);
-  void storeMove(Piece* movedPiece, Position fromPos, Position toPos);
-  void checkAttackPreviousLongPawnOpening();
 };

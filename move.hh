@@ -16,6 +16,12 @@ public:
   Field* getRookFromFieldDuringCastling();
   Field* getRookToFieldDuringCastling();
 
+  void setLongPawnOpening();
+  bool isLongPawnOpening();
+
+  void setAttackOfPreviousLongOpenedPawn();
+  bool isAttackOfPreviousLongOpenedPawn();
+
 private:
   Field* fromField;
   Field* toField;
@@ -23,4 +29,7 @@ private:
   bool castling;
   Field* rookFromFieldDuringCastling;
   Field* rookToFieldDuringCastling;
+
+  bool longPawnOpening;
+  bool attackOfPreviousLongOpenedPawn;
 };
