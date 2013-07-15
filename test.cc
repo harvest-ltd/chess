@@ -79,6 +79,7 @@ void Test::run() {
   pawnKillsLongOpeningPawn();
 
   kingCastling();
+  kingCastlingKingIsUnderAttack();
   kingCastlingBlockedByOtherPiece();
   kingCastlingKingAlreadyMoved();
   kingCastlingRookAlreadyMoved();
@@ -561,6 +562,32 @@ void Test::kingCastling() {
 
   ASSERT(board.getField(rookFromPos)->getPiece() == NULL);
   ASSERT_FIGURE(board.getField(rookToPos)->getPiece(), rook, white);
+}
+
+void Test::kingCastlingKingIsUnderAttack() {
+  PRINT_TESTCASE("kingCastlingKingIsUnderAttack");
+
+  for (char index = 0; index < 3; ++index) {
+    Board board;
+    eResult result;
+
+    Position kingFromPos(5, 1);
+    Position kingToPos(7, 1);
+
+    Field* kingFromField = board.getField(kingFromPos);
+    Field* kingToField = board.getField(kingToPos);
+    Move move(kingFromField, kingToField);
+
+    Position rookPos(8, 1);
+    Position queenPos(5 + index, 8);
+
+    board.addPieceToBoard(king, white, kingFromPos);
+    board.addPieceToBoard(rook, white, rookPos);
+    board.addPieceToBoard(queen, black, queenPos);
+
+    result = board.applyMove(&move);
+    ASSERT_EQUAL(result, eInvalidMove); 
+  }
 }
 
 void Test::kingCastlingBlockedByOtherPiece() {

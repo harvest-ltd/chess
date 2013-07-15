@@ -72,6 +72,17 @@ bool King::isMoveValid(Move* move) {
     }
   }
 
+  for (unsigned char index = 0; index <= numberOfEmptyFields; ++index) {
+    Position attackedPosition(position);
+    attackedPosition.col = position.col + step * index;
+
+    Field* attackedField = board->getField(attackedPosition);
+    if (board->isFieldAttacked(attackedField, this->getAttackColor())) {
+      DEBUGLINE("king is under attack");  
+      return false;
+    }
+  }
+
   Position rookPosition(position);
   rookPosition.col = position.col + step * (numberOfEmptyFields + 1);
   Field* rookFromField = board->getField(rookPosition);

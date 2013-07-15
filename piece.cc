@@ -20,6 +20,14 @@ ePieceColor Piece::getColor() {
   return color;
 }
 
+ePieceColor Piece::getAttackColor() {
+  if (color == white) {
+    return black;
+  } else {
+    return white;
+  }
+}
+
 const char* Piece::getColorName() {
   return colorNames[color];
 }

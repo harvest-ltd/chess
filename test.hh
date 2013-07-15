@@ -31,6 +31,7 @@ private:
   void pawnInvalidAttackMove();
   void pawnKillsLongOpeningPawn();
   void kingCastling();
+  void kingCastlingKingIsUnderAttack();
   void kingCastlingBlockedByOtherPiece();
   void kingCastlingKingAlreadyMoved();
   void kingCastlingRookAlreadyMoved();

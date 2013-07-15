@@ -26,6 +26,7 @@ public:
   virtual ~Piece();
 
   ePieceColor getColor();
+  ePieceColor getAttackColor();
   const char* getColorName();
   ePieceType getType();
   const char* getName();
